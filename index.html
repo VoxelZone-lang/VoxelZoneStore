@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Descarga gratis modelos 3D, scripts Lua y soporte para Roblox y Blender en HongoZone." />
+  <title>🌟 HongoZone - Todo Gratis</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://cdn-icons-png.flaticon.com" />
+  <link rel="preconnect" href="https://raw.githubusercontent.com" />
+</head>
+<body>
+
+  <!-- Fondo con estrellas animadas -->
+  <div id="stars" aria-hidden="true"></div>
+
+  <!-- Botón de menú hamburguesa (accesible) -->
+  <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Barra lateral de navegación -->
+  <nav class="sidebar" id="sidebar" aria-label="Menú principal">
+    <ul>
+      <li><button id="btnCompra" type="button">Menú de Compra</button></li>
+      <li><button id="btnScripts" type="button">Scripts / Lua</button></li>
+      <li><button id="btnSoporte" type="button">Soporte / Ayuda</button></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- Sección: Compra (Modelos 3D) -->
+    <section id="compraMenu" class="menu activo" role="region" aria-labelledby="titulo-compra">
+      <header class="titulo-principal">
+        <h1 id="titulo-compra">¡Todo Gratis!</h1>
+        <p>Descargá tus productos favoritos en VoxelZone.</p>
+      </header>
+      <div class="productos">
+        <article class="producto" data-nombre="Hongo De Mario" data-link="https://raw.githubusercontent.com/VoxelZone-lang/productos/refs/heads/main/Hongo.blend" data-img="https://raw.githubusercontent.com/VoxelZone-lang/productos/main/CapHongo.png">
+          <h2>Hongo De Mario</h2>
+          <a href="#" class="glow-button" data-action="download">Descargar Gratis</a>
+        </article>
+        <article class="producto" data-nombre="Tubo De Mario" data-link="https://raw.githubusercontent.com/VoxelZone-lang/productos/refs/heads/main/Tubo.blend" data-img="https://raw.githubusercontent.com/VoxelZone-lang/productos/main/CapTubo.png">
+          <h2>Tubo De Mario</h2>
+          <a href="#" class="glow-button" data-action="download">Descargar Gratis</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Sección: Scripts / Lua -->
+    <section id="scriptsMenu" class="menu" role="region" aria-labelledby="titulo-scripts">
+      <div class="scripts-container">
+        <h1 id="titulo-scripts">💻 Scripts / Lua</h1>
+        <p>Descargá y probá algunos de mis scripts para Roblox o proyectos personales.</p>
+        <div class="productos">
+          <article class="producto" 
+            data-nombre="Leaderstats con Guardado" 
+            data-link="scripts/leaderstats.lua" 
+            data-img="https://cdn-icons-png.flaticon.com/512/2621/2621100.png"
+            data-codigo='-- 🧠 Leaderstats con Guardado Automático&#10;-- Colocar dentro de ServerScriptService&#10;&#10;local DataStoreService = game:GetService(&quot;DataStoreService&quot;)&#10;local Players = game:GetService(&quot;Players&quot;)&#10;&#10;local DATASTORE_NAME = &quot;PlayerLeaderstats&quot;&#10;&#10;local DEFAULT_STATS = {&#10;    Coins = 0,&#10;    Level = 1&#10;}&#10;&#10;local function createLeaderstats(player)&#10;    local leaderstats = Instance.new(&quot;Folder&quot;)&#10;    leaderstats.Name = &quot;leaderstats&quot;&#10;    leaderstats.Parent = player&#10;&#10;    for statName, defaultValue in pairs(DEFAULT_STATS) do&#10;        local valueObject = Instance.new(&quot;IntValue&quot;)&#10;        valueObject.Name = statName&#10;        valueObject.Value = defaultValue&#10;        valueObject.Parent = leaderstats&#10;    end&#10;end&#10;&#10;Players.PlayerAdded:Connect(function(player)&#10;    createLeaderstats(player)&#10;&#10;    local success, data = pcall(function()&#10;        local store = DataStoreService:GetDataStore(DATASTORE_NAME)&#10;        return store:GetAsync(&quot;Player_&quot; .. player.UserId)&#10;    end)&#10;&#10;    if success and type(data) == &quot;table&quot; then&#10;        local leaderstats = player:WaitForChild(&quot;leaderstats&quot;)&#10;        for statName, value in pairs(data) do&#10;            if leaderstats:FindFirstChild(statName) and type(value) == &quot;number&quot; then&#10;                leaderstats[statName].Value = value&#10;            end&#10;        end&#10;        warn(&quot;Datos cargados para:&quot;, player.Name)&#10;    else&#10;        warn(&quot;No se encontraron datos guardados o error al cargar para:&quot;, player.Name)&#10;    end&#10;end)&#10;&#10;Players.PlayerRemoving:Connect(function(player)&#10;    local success, errorMessage = pcall(function()&#10;        local leaderstats = player:FindFirstChild(&quot;leaderstats&quot;)&#10;        if not leaderstats then return end&#10;&#10;        local dataToSave = {}&#10;        for _, valueObject in pairs(leaderstats:GetChildren()) do&#10;            if valueObject:IsA(&quot;IntValue&quot;) or valueObject:IsA(&quot;NumberValue&quot;) then&#10;                dataToSave[valueObject.Name] = valueObject.Value&#10;            end&#10;        end&#10;&#10;        local store = DataStoreService:GetDataStore(DATASTORE_NAME)&#10;        store:SetAsync(&quot;Player_&quot; .. player.UserId, dataToSave)&#10;    end)&#10;&#10;    if not success then&#10;        warn(&quot;Error al guardar datos de:&quot;, player.Name, &quot;-&quot;, errorMessage)&#10;    else&#10;        print(&quot;Datos guardados correctamente para:&quot;, player.Name)&#10;    end&#10;end)'>
+            <h2>🧠 Leaderstats con Guardado</h2>
+            <a href="#" class="glow-button" data-action="download">Descargar Script</a>
+            <a href="#" class="glow-button ver-codigo" data-action="view-code">Ver Código</a>
+          </article>
+          <article class="producto" 
+            data-nombre="Detector de Zona" 
+            data-link="scripts/zonedetector.lua" 
+            data-img="https://cdn-icons-png.flaticon.com/512/1055/1055646.png"
+            data-codigo='-- Código ejemplo Detector de Zona&#10;print(&quot;Zona detectada&quot;)'>
+            <h2>🌀 Detector de Zona</h2>
+            <a href="#" class="glow-button" data-action="download">Descargar Script</a>
+            <a href="#" class="glow-button ver-codigo" data-action="view-code">Ver Código</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Soporte -->
+    <section id="soporteMenu" class="menu" role="region" aria-labelledby="titulo-soporte">
+      <div class="soporte-container">
+        <h1 id="titulo-soporte">🆘 Soporte y Ayuda</h1>
+        <p>Todos los productos que ofrecemos son recursos 3D gratuitos que podés usar para:</p>
+        <ul>
+          <li>🎮 Roblox: animaciones, accesorios y assets</li>
+          <li>🎨 Diseño: renders, ilustraciones y material gráfico</li>
+          <li>🎥 Videos: efectos 3D y objetos para edición</li>
+          <li>🖌 Blender: modelos 3D listos para animar y exportar</li>
+        </ul>
+        <p>Si tenés dudas o consultas, podés contactarme directamente por Discord:</p>
+        <a href="https://discord.gg/62GbpBxhAu" target="_blank" rel="noopener noreferrer" class="glow-button">💬 Contactar en Discord</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal: Confirmación de descarga -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-content">
+      <img id="modal-img" src="" alt="" />
+      <p id="modal-text"></p>
+      <div class="modal-buttons">
+        <button id="modal-yes" type="button">Sí</button>
+        <button id="modal-no" type="button">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Visualización de código -->
+  <div id="modal-codigo" class="modal" role="dialog" aria-modal="true" aria-labelledby="codigo-title" aria-hidden="true">
+    <div class="modal-content">
+      <h2 id="codigo-title"></h2>
+      <pre><code id="codigo-text"></code></pre>
+      <button id="cerrar-codigo" type="button">Cerrar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
